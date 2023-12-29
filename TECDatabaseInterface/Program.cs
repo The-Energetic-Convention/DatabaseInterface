@@ -9,9 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class DatabaseInteface {
 
-    static UsersContext UserDB = new UsersContext(new DbContextOptionsBuilder<UsersContext>().EnableSensitiveDataLogging().Options);
-    static EventsContext EventDB = new EventsContext(new DbContextOptionsBuilder<EventsContext>().EnableSensitiveDataLogging().Options);
-    private static int numThreads = 4;
+    private static int numThreads = 40;
 
     public static void Main(string[] args)
     {
@@ -115,6 +113,7 @@ public class DatabaseInteface {
         switch (databsetype)
         {
             case "U":
+                UsersContext UserDB = new UsersContext(new DbContextOptionsBuilder<UsersContext>().EnableSensitiveDataLogging().Options);
                 UserInfo? userInfo = JsonConvert.DeserializeObject<UserInfo>(operation);
                 if (userInfo == null) { OperationFail(ss, "null user info"); return; }
                 UserDB.Add(userInfo);
@@ -122,6 +121,7 @@ public class DatabaseInteface {
                 UserDB.ChangeTracker.Clear();
                 break;
             case "E":
+                EventsContext EventDB = new EventsContext(new DbContextOptionsBuilder<EventsContext>().EnableSensitiveDataLogging().Options);
                 EventInfo? eventInfo = JsonConvert.DeserializeObject<EventInfo>(operation);
                 if (eventInfo == null) { OperationFail(ss, "null event info"); return; }
                 EventDB.Add(eventInfo);
@@ -148,6 +148,7 @@ public class DatabaseInteface {
         switch (databsetype)
         {
             case "U":
+                UsersContext UserDB = new UsersContext(new DbContextOptionsBuilder<UsersContext>().EnableSensitiveDataLogging().Options);
                 if (operation.Contains("EMAIL="))
                 {
                     //search by email
@@ -180,6 +181,7 @@ public class DatabaseInteface {
                 UserDB.ChangeTracker.Clear();
                 break;
             case "E":
+                EventsContext EventDB = new EventsContext(new DbContextOptionsBuilder<EventsContext>().EnableSensitiveDataLogging().Options);
                 switch (operation)
                 {
                     case "ALL":
@@ -213,6 +215,7 @@ public class DatabaseInteface {
         switch (databsetype)
         {
             case "U":
+                UsersContext UserDB = new UsersContext(new DbContextOptionsBuilder<UsersContext>().EnableSensitiveDataLogging().Options);
                 UserInfo? userInfo = JsonConvert.DeserializeObject<UserInfo>(operation);
                 if (userInfo == null) { OperationFail(ss, "null user info"); return; }
                 UserDB.Update(userInfo);
@@ -220,6 +223,7 @@ public class DatabaseInteface {
                 UserDB.ChangeTracker.Clear();
                 break;
             case "E":
+                EventsContext EventDB = new EventsContext(new DbContextOptionsBuilder<EventsContext>().EnableSensitiveDataLogging().Options);
                 EventInfo? eventInfo = JsonConvert.DeserializeObject<EventInfo>(operation);
                 if (eventInfo == null) { OperationFail(ss, "null event info"); return; }
                 EventDB.Update(eventInfo);
@@ -246,6 +250,7 @@ public class DatabaseInteface {
         switch (databsetype)
         {
             case "U":
+                UsersContext UserDB = new UsersContext(new DbContextOptionsBuilder<UsersContext>().EnableSensitiveDataLogging().Options);
                 Console.WriteLine(operation);
                 UserInfo? userInfo = JsonConvert.DeserializeObject<UserInfo>(operation);
                 if (userInfo == null) { OperationFail(ss, "null user info"); return; }
@@ -254,6 +259,7 @@ public class DatabaseInteface {
                 UserDB.ChangeTracker.Clear();
                 break;
             case "E":
+                EventsContext EventDB = new EventsContext(new DbContextOptionsBuilder<EventsContext>().EnableSensitiveDataLogging().Options);
                 EventInfo? eventInfo = JsonConvert.DeserializeObject<EventInfo>(operation);
                 if (eventInfo == null) { OperationFail(ss, "null event info"); return; }
                 EventDB.Remove(eventInfo);
