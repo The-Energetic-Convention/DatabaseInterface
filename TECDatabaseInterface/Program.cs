@@ -49,7 +49,7 @@ public class DatabaseInteface {
     private static void ServerThread(object? data)
     {
         NamedPipeServerStream pipeServer =
-            new NamedPipeServerStream("TECDatabasePipe", PipeDirection.InOut, numThreads);
+            new NamedPipeServerStream("TECDatabasePipe", PipeDirection.InOut, numThreads, PipeTransmissionMode.Byte, PipeOptions.WriteThrough);
 
         int threadId = Thread.CurrentThread.ManagedThreadId;
 
