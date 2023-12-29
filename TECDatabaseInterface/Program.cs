@@ -145,8 +145,6 @@ public class DatabaseInteface {
         ss.WriteString("READY");
         string operation = ss.ReadString();
 
-        Console.WriteLine($"Reading {databsetype}: {operation}");
-
         switch (databsetype)
         {
             case "U":
@@ -157,7 +155,6 @@ public class DatabaseInteface {
                     string email = operation.Replace("EMAIL=", "");
                     UserInfo[] users = UserDB.GetUsersByEmail(email).ToArray();
                     UserInfo? user = users.Length>0? users[0] : null;
-                    Console.WriteLine($"Sending User: {JsonConvert.SerializeObject(user)}");
                     ss.WriteString(JsonConvert.SerializeObject(users));
                 }
                 else if (operation.Contains("USERNAME="))
@@ -166,7 +163,6 @@ public class DatabaseInteface {
                     string username = operation.Replace("USERNAME=", "");
                     UserInfo[] users = UserDB.GetUsersByUsername(username).ToArray();
                     UserInfo? user = users.Length > 0 ? users[0] : null;
-                    Console.WriteLine($"Sending User: {JsonConvert.SerializeObject(user)}");
                     ss.WriteString(JsonConvert.SerializeObject(user));
                 }
                 else if (operation == "ALL")
@@ -174,7 +170,6 @@ public class DatabaseInteface {
                     //return all
                     UserInfo[] users = UserDB.UserInfos.ToArray();
                     string serializedusers = JsonConvert.SerializeObject(users);
-                    Console.WriteLine($"Sending Users: {users}");
                     ss.WriteString(serializedusers);
                 }
                 else
@@ -182,7 +177,6 @@ public class DatabaseInteface {
                     //get by id
                     int id = int.Parse(operation);
                     string user = JsonConvert.SerializeObject(UserDB.Find<UserInfo>(id));
-                    Console.WriteLine($"Sending User: {user}");
                     ss.WriteString(user);
                 }
                 UserDB.ChangeTracker.Clear();
@@ -198,7 +192,6 @@ public class DatabaseInteface {
                     default:
                         int id = int.Parse(operation);
                         string @event = JsonConvert.SerializeObject(EventDB.Find<EventInfo>(id));
-                        Console.WriteLine($"Sending Event: {@event}");
                         ss.WriteString(@event);
                         break;
                 }
